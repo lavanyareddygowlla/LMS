@@ -1,5 +1,6 @@
 package com.aspl.services;
 
+import com.aspl.entities.Klass;
 import com.aspl.entities.Student;
 import com.aspl.entities.Teacher;
 import com.aspl.enums.Gender;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class TeacherServiceTest {
     @Test
     public void shouldCreateTeacher() {
         Teacher result = this.teacherService.create(teacher);
-        assertEquals(2,result.getId());
+        assertEquals(4,result.getId());
     }
 
     @Test(expected=javax.validation.ConstraintViolationException.class)
@@ -61,7 +63,6 @@ public class TeacherServiceTest {
         assertNotNull(res);
     }
 
-
     @Test
     public void shouldNotFindStudentByIdBadId() throws Exception {
         teacher = this.teacherService.findTeacherById(5);
@@ -69,20 +70,41 @@ public class TeacherServiceTest {
     }
 
     @Test
-    public void shouldFindAllTeachersByGender() throws Exception {
+    public void shouldFindAllMaleTeachers() throws Exception {
         Teacher t=this.teacherService.create(teacher);
         List<Teacher> aList=new ArrayList<Teacher>();
         aList= (List<Teacher>) this.teacherService.findAllTeachersByGender(Gender.MALE);
-        assertEquals(1,aList.size());
+        assertEquals(2,aList.size());
+    }
+
+    @Test
+    public void shouldFindAllFemaleTeachers() throws Exception {
+        Teacher t=this.teacherService.create(teacher);
+        List<Teacher> aList=new ArrayList<Teacher>();
+        aList= (List<Teacher>) this.teacherService.findAllTeachersByGender(Gender.FEMALE);
+        assertEquals(2,aList.size());
     }
 
     @Test
     public void shouldFindByAge() {
         Teacher t = this.teacherService.create(teacher);
         List<Teacher> teachers = new ArrayList<Teacher>();
-
         teachers = (List<Teacher>) this.teacherService.findTeachersByAgeGreaterThan(20);
-        assertEquals(2,teachers.size());
+        assertEquals(4,teachers.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindAllTheKlassesTaughtByTeacher() throws Exception {
+        List<Klass> klasses = this.teacherService.findTeacherById(2).getKlasses();
+        assertEquals(2, klasses.size());
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindNoKlassesTaughtByTeacher() throws Exception {
+        List<Klass> klasses = this.teacherService.findTeacherById(3).getKlasses();
+        assertEquals(0, klasses.size());
     }
 
 }

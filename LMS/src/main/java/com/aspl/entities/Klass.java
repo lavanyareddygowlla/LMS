@@ -2,6 +2,7 @@ package com.aspl.entities;
 
 
 import com.aspl.enums.Department;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -24,17 +25,18 @@ public class Klass {
     private float fee;
     private Date created;
     private Date modified;
-
+    private Teacher teacher;
     public Klass() {
     }
 
-    public Klass( String name,Date semester,  int credits, Department department, float fee) {
+    public Klass( String name,Date semester,  int credits, Department department, float fee,Teacher teacher) {
 
         this.name = name;
         this.semester = semester;
         this.credits = credits;
         this.department = department;
         this.fee = fee;
+        this.teacher=teacher;
     }
 
     @Id
@@ -112,5 +114,14 @@ public class Klass {
     }
     public void setFee(float fee) {
         this.fee = fee;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="teacher_id")
+    public Teacher getTeacher() {
+        return teacher;
+    }
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 }

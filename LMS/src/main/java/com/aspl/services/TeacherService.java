@@ -26,13 +26,11 @@ public class TeacherService {
     }
 
     public Iterable<Teacher> findAllTeachersByGender(Gender male) {
-
-        return this.teacherRepository.findAllTeachersByGender(male);
-
+        return this.teacherRepository.findByGender(male);
     }
 
     public Iterable<Teacher> findTeachersByAgeGreaterThan(int i) {
-        return this.teacherRepository.findTeachersByAgeGreaterThan(i);
+        return this.teacherRepository.findByAgeGreaterThan(i);
     }
 
 }

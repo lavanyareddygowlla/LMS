@@ -11,10 +11,8 @@ import java.util.List;
 
 @Repository
 public interface ITeacherRepository extends CrudRepository<Teacher,Integer> {
-    Iterable<Teacher> findAllTeachersByGender(Gender male);
 
-
-    String sql1 = "select * from teachers where age > :age ";
-    @Query(value = sql1, nativeQuery = true)
-    Iterable<Teacher> findTeachersByAgeGreaterThan(@Param("age") int age);
+    public Teacher findByName(String name);
+    public List<Teacher> findByGender(Gender gender);
+    public List<Teacher> findByAgeGreaterThan(int age);
 }

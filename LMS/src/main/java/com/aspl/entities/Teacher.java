@@ -8,6 +8,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "teachers")
@@ -19,7 +20,10 @@ public class Teacher {
     private int age;
     private Date created;
     private Date modified;
-    private Klass klass;
+    private List<Klass> klasses;
+
+    public Teacher() {
+    }
 
 
     @Id
@@ -31,11 +35,11 @@ public class Teacher {
         this.id = id;
     }
 
-    public Teacher(String name, Gender gender, int age,Klass klass) {
+    public Teacher(String name, Gender gender, int age) {
         this.name = name;
         this.gender = gender;
         this.age = age;
-        this.klass=klass;
+
     }
 
     @Version
@@ -89,14 +93,13 @@ public class Teacher {
         this.modified = modified;
     }
 
-    @ManyToOne
-    @JoinColumn(name="user_id")
+    @OneToMany(mappedBy = "teacher")
     @JsonIgnore
-    public Klass getKlass() {
-        return klass;
+    public List<Klass> getKlasses() {
+        return klasses;
     }
-    public void setKlass(Klass user) {
-        this.klass = klass;
+    public void setKlasses(List<Klass> klasses) {
+        this.klasses = klasses;
     }
 
 }

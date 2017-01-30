@@ -1,5 +1,3 @@
-ALTER TABLE `teachers`
-ADD COLUMN `klasses_id` INT NOT NULL ,
-ADD CONSTRAINT `fk_klasses_id` FOREIGN KEY(`klasses_id`)  REFERENCES  `klasses` (`id`)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+
+ALTER TABLE klasses ADD teacher_id INT NOT NULL;
+ALTER TABLE klasses ADD CONSTRAINT fk_teacher_id FOREIGN KEY (teacher_id) REFERENCES teachers(id);
