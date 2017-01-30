@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Sql(value = {"/sql/seed.sql"})
+@Sql(value = {"/sql/student.sql"})
 public class StudentServiceTest {
 
     @Autowired

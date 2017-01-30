@@ -2,10 +2,9 @@ package com.aspl.entities;
 
 
 import com.aspl.enums.Gender;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -20,9 +19,8 @@ public class Teacher {
     private int age;
     private Date created;
     private Date modified;
+    private Klass klass;
 
-    public Teacher() {
-    }
 
     @Id
     @GeneratedValue
@@ -33,10 +31,11 @@ public class Teacher {
         this.id = id;
     }
 
-    public Teacher(String name, Gender gender, int age) {
+    public Teacher(String name, Gender gender, int age,Klass klass) {
         this.name = name;
         this.gender = gender;
         this.age = age;
+        this.klass=klass;
     }
 
     @Version
@@ -88,6 +87,16 @@ public class Teacher {
     }
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    @JsonIgnore
+    public Klass getKlass() {
+        return klass;
+    }
+    public void setKlass(Klass user) {
+        this.klass = klass;
     }
 
 }

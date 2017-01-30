@@ -35,5 +35,4 @@ public class TeacherService {
         return this.teacherRepository.findTeachersByAgeGreaterThan(i);
     }
 
-
 }
